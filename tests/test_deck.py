@@ -6,7 +6,7 @@ class DeckTest(unittest.TestCase):
     def test_stores_no_cards_at_start(self):
         deck = Deck()
         self.assertEqual(
-            deck.cards,
+            deck._cards,
             []
         )
     
@@ -15,6 +15,6 @@ class DeckTest(unittest.TestCase):
         deck = Deck()
         deck.add_cards([card])
         self.assertEqual(
-            deck.cards,
+            deck._cards,
             [card]
         )

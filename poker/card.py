@@ -10,6 +10,24 @@ class Card():
                 "Jack", "Queen", "King", "Ace"
             )
 
+    @classmethod
+    def create_standard_52_cards(cls):
+        """
+        Return a list containing 52 Card objects
+        by iterating over each of the 13 ranks
+        within each of the 4 suits.
+        """
+        return [
+            cls(rank = rank, suit = suit) 
+            for suit in cls.SUITS 
+            for rank in cls.RANKS 
+        ]
+        # cards = []
+        # for suit in cls.SUITS:
+        #     for rank in cls.RANKS:
+        #         cards.append(cls(rank = rank, suit = suit))
+        # return cards
+
     def __init__(self, rank, suit):
         # The Class Attribute will be available on every Class Instance so we can access it using 'self'
         if rank not in self.RANKS:
@@ -25,3 +43,10 @@ class Card():
     
     def __repr__(self):
         return f"Card(rank = '{self.rank}', suit = '{self.suit}')"
+    
+    def __eq__(self, other):
+        """
+        Asserts that Card objects are equal if they have
+        the same rank and the same suit.
+        """
+        return self.rank == other.rank and self.suit == other.suit

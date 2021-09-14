@@ -41,3 +41,23 @@ class CardTest(unittest.TestCase):
     def test_only_allows_for_valid_suit(self):
         with self.assertRaises(ValueError):
             Card(rank = "4", suit = "Jokers")
+    
+    def test_can_create_standard_52_cards(self):
+        cards = Card.create_standard_52_cards()
+        self.assertEqual(len(cards), 52)
+
+        self.assertEqual(
+            cards[0],
+            Card(rank = "2", suit = "Clubs")
+        )
+
+        self.assertEqual(
+            cards[-1],
+            Card(rank = "Ace", suit = "Spades")
+        )
+
+    def test_asserts_true_if_two_cards_have_the_same_rank_and_suit(self):
+        self.assertEqual(
+            Card(rank = "5", suit = "Diamonds"),
+            Card(rank = "5", suit = "Diamonds")
+        )

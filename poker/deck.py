@@ -4,7 +4,7 @@ class Deck():
     Empty to begin with.
     """
     def __init__(self):
-        self.cards = []
+        self._cards = []
     
     def add_cards(self, cards):
-        self.cards.extend(cards)
+        self._cards.extend(cards)

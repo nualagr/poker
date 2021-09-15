@@ -107,3 +107,16 @@ class HandTest(unittest.TestCase):
             hand.best_rank(),
             "High Card"
         )
+    
+    def test_figures_out_flush_is_best_rank(self):
+        cards = [
+            Card(rank = rank, suit = "Diamonds")
+            for rank in ["2", "5", "8", "10", "Ace"]
+        ]
+
+        hand = Hand(cards = cards)
+
+        self.assertEqual(
+            hand.best_rank(),
+            "Flush"
+        )

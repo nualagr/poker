@@ -13,7 +13,7 @@ class Card():
     @classmethod
     def create_standard_52_cards(cls):
         """
-        Return a list containing 52 Card objects
+        Return a list containing 52 card Objects
         by iterating over each of the 13 ranks
         within each of the 4 suits.
         """
@@ -22,11 +22,6 @@ class Card():
             for suit in cls.SUITS 
             for rank in cls.RANKS 
         ]
-        # cards = []
-        # for suit in cls.SUITS:
-        #     for rank in cls.RANKS:
-        #         cards.append(cls(rank = rank, suit = suit))
-        # return cards
 
     def __init__(self, rank, suit):
         # The Class Attribute will be available on every Class Instance so we can access it using 'self'
@@ -36,8 +31,9 @@ class Card():
         if suit not in self.SUITS:
             raise ValueError(f"Invalid suit. Suit must be one of the following: {self.SUITS}")
         self.rank = rank
+        self.rank_index = self.RANKS.index(rank)
         self.suit = suit
-    
+   
     def __str__(self):
         return f"{self.rank} of {self.suit}"
     
@@ -50,3 +46,9 @@ class Card():
         the same rank and the same suit.
         """
         return self.rank == other.rank and self.suit == other.suit
+    
+    def __lt__(self, other):
+        """
+        Defines the less-than operator with respect to Card Objects
+        """
+        return self.rank_index < other.rank_index

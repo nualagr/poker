@@ -11,6 +11,7 @@ class Hand():
     @property
     def _rank_validations_from_best_to_worst(self):
         return (
+            ("Full House", self._full_house),
             ("Flush", self._flush),
             ("Straight", self._straight),
             ("Three of a Kind", self._three_of_a_kind), 
@@ -27,6 +28,10 @@ class Hand():
            if validator_func() == True:
                return name
     
+    def _full_house(self):
+        if self._three_of_a_kind() and self._pair():
+            return True
+
     def _flush(self):
         suits_that_occur_five_or_more_times = {
             suit: suit_count

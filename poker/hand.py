@@ -11,6 +11,7 @@ class Hand():
     @property
     def _rank_validations_from_best_to_worst(self):
         return (
+            ("Four of a Kind", self._four_of_a_kind),
             ("Full House", self._full_house),
             ("Flush", self._flush),
             ("Straight", self._straight),
@@ -27,7 +28,11 @@ class Hand():
            # Invoke the method/function to return a Boolean
            if validator_func() == True:
                return name
-    
+
+    def _four_of_a_kind(self):
+        ranks_with_four_of_a_kind = self._ranks_with_count(4)
+        return len(ranks_with_four_of_a_kind) == 1
+
     def _full_house(self):
         if self._three_of_a_kind() and self._pair():
             return True

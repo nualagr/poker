@@ -135,4 +135,20 @@ class HandTest(unittest.TestCase):
         self.assertEqual(
             hand.best_rank(),
             "Full House"
+        )
+    
+    def test_figures_out_four_of_a_kind_is_best_rank(self):
+        cards = [
+            Card(rank = "3", suit = "Hearts"),
+            Card(rank = "3", suit = "Spades"),
+            Card(rank = "3", suit = "Diamonds"),
+            Card(rank = "3", suit = "Clubs"),
+            Card(rank = "7", suit = "Hearts")
+        ]
+
+        hand = Hand(cards = cards)
+
+        self.assertEqual(
+            hand.best_rank(),
+            "Four of a Kind"
         ) 

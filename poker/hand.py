@@ -11,6 +11,9 @@ class Hand():
     @property
     def _rank_validations_from_best_to_worst(self):
         return (
+            ("Royal Flush", self._royal_flush),
+            ("Straight Flush", self._straight_flush),
+            ("Four of a Kind", self._four_of_a_kind),
             ("Four of a Kind", self._four_of_a_kind),
             ("Full House", self._full_house),
             ("Flush", self._flush),
@@ -28,6 +31,14 @@ class Hand():
            # Invoke the method/function to return a Boolean
            if validator_func() == True:
                return name
+
+    def _royal_flush(self):
+        is_straight_flush = self._straight_flush()
+        is_royal = self.cards[-1].rank == "Ace"
+        return is_straight_flush and is_royal
+
+    def _straight_flush(self):
+        return self._flush() and self._straight()
 
     def _four_of_a_kind(self):
         ranks_with_four_of_a_kind = self._ranks_with_count(4)

@@ -151,4 +151,36 @@ class HandTest(unittest.TestCase):
         self.assertEqual(
             hand.best_rank(),
             "Four of a Kind"
+        )
+    
+    def test_figures_out_straight_flush_is_best_rank(self):
+        cards = [
+            Card(rank = "9", suit = "Hearts"),
+            Card(rank = "10", suit = "Hearts"),
+            Card(rank = "Jack", suit = "Hearts"),
+            Card(rank = "Queen", suit = "Hearts"),
+            Card(rank = "King", suit = "Hearts")
+        ]
+
+        hand = Hand(cards = cards)
+
+        self.assertEqual(
+            hand.best_rank(),
+            "Straight Flush"
+        )
+
+    def test_figures_out_royal_flush_is_best_rank(self):
+        cards = [
+            Card(rank = "10", suit = "Hearts"),
+            Card(rank = "Jack", suit = "Hearts"),
+            Card(rank = "Queen", suit = "Hearts"),
+            Card(rank = "King", suit = "Hearts"),
+            Card(rank = "Ace", suit = "Hearts")
+        ]
+
+        hand = Hand(cards = cards)
+
+        self.assertEqual(
+            hand.best_rank(),
+            "Royal Flush"
         ) 

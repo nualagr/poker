@@ -1,13 +1,17 @@
 class Hand():
-    def __init__(self, cards):
+    def __init__(self):
         """
         Create a Hand object with
-        a sorted copy of the cards list provided.
+        an empty cards list.
         """
-        copy = cards[:]
+        self.cards = []
+    
+    def add_cards(self, cards):
+        copy = self.cards[:]
+        copy.extend(cards)
         copy.sort()
         self.cards = copy
-    
+
     @property
     def _rank_validations_from_best_to_worst(self):
         return (

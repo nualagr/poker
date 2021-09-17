@@ -1,6 +1,5 @@
 import unittest
 from unittest.mock import MagicMock
-from poker.card import Card
 from poker.hand import Hand
 from poker.player import Player
 

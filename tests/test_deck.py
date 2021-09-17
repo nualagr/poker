@@ -1,8 +1,6 @@
 import unittest
 from unittest.mock import patch
 
-import random
-
 from poker.card import Card
 from poker.deck import Deck
 
@@ -40,3 +38,25 @@ class DeckTest(unittest.TestCase):
         deck.shuffle()
 
         mock_shuffle.assert_called_once_with(cards)
+    
+    def test_removes_specified_number_of_cards_from_deck(self):
+        three = Card(rank = "3", suit = "Clubs")
+        king = Card(rank = "King", suit = "Hearts")
+        five = Card(rank = "5", suit = "Spades")
+       
+        cards = [three, king, five]
+
+        deck = Deck()
+        deck.add_cards(cards)
+
+        # Test the return value
+        self.assertEqual(
+            deck.remove_cards(1),
+            [three]
+        )
+
+        # Test the state of the object
+        self.assertEqual(
+            deck._cards,
+            [king, five]
+        )

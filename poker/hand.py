@@ -1,11 +1,11 @@
-class Hand():
+class Hand:
     def __init__(self):
         """
         Create a Hand object with
         an empty cards list.
         """
         self.cards = []
-    
+
     def add_cards(self, cards):
         copy = self.cards[:]
         copy.extend(cards)
@@ -22,20 +22,20 @@ class Hand():
             ("Full House", self._full_house),
             ("Flush", self._flush),
             ("Straight", self._straight),
-            ("Three of a Kind", self._three_of_a_kind), 
-            ("Two Pair", self._two_pair), 
-            ("Pair", self._pair), 
+            ("Three of a Kind", self._three_of_a_kind),
+            ("Two Pair", self._two_pair),
+            ("Pair", self._pair),
             ("High Card", self._high_card),
-            ("No Cards", self._no_cards)
+            ("No Cards", self._no_cards),
         )
 
     def best_rank(self):
         for rank in self._rank_validations_from_best_to_worst:
-           # Unpack the tuple into variables
-           name, validator_func = rank
-           # Invoke the method/function to return a Boolean
-           if validator_func() == True:
-               return name
+            # Unpack the tuple into variables
+            name, validator_func = rank
+            # Invoke the method/function to return a Boolean
+            if validator_func() == True:
+                return name
 
     def _royal_flush(self):
         is_straight_flush = self._straight_flush()
@@ -70,7 +70,7 @@ class Hand():
         Check that the current hand has at least 5 cards.
         Convert cards list into a list of the cards' rank_index.
         Use range() to generate a strictly-increasing list
-        from the first card.rank_index to the last, increment 
+        from the first card.rank_index to the last, increment
         the latter by one. Compare the two lists.
         Return True if the two lists are equal.
         """
@@ -79,11 +79,9 @@ class Hand():
         rank_indexes = [card.rank_index for card in self.cards]
         starting_rank_index = rank_indexes[0]
         last_rank_index = rank_indexes[-1] + 1
-        straight_consecutive_indexes = list(
-            range(starting_rank_index, last_rank_index)
-            )
+        straight_consecutive_indexes = list(range(starting_rank_index, last_rank_index))
         if rank_indexes == straight_consecutive_indexes:
-            return True 
+            return True
 
     def _three_of_a_kind(self):
         ranks_with_three_of_a_kind = self._ranks_with_count(3)
@@ -92,24 +90,24 @@ class Hand():
     def _two_pair(self):
         ranks_with_pairs = self._ranks_with_count(2)
         return len(ranks_with_pairs) == 2
-    
+
     def _pair(self):
         ranks_with_pairs = self._ranks_with_count(2)
         return len(ranks_with_pairs) == 1
 
     def _high_card(self):
         return len(self.cards) >= 2
-    
+
     def _no_cards(self):
         return len(self.cards) == 0
 
     def _ranks_with_count(self, count):
         return {
-            rank:  rank_count 
+            rank: rank_count
             for rank, rank_count in self._card_rank_counts.items()
             if rank_count == count
         }
-       
+
     @property
     def _card_suit_counts(self):
         card_suit_counts = {}

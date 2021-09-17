@@ -15,8 +15,8 @@ deck.add_cards(cards)
 hand1 = Hand()
 hand2 = Hand()
 
-player1 = Player(name = "Ben", hand = hand1)
-player2 = Player(name = "Bobby", hand = hand2)
+player1 = Player(name="Ben", hand=hand1)
+player2 = Player(name="Bobby", hand=hand2)
 players = [player1, player2]
 
 # game = Game(deck = deck, players = players)

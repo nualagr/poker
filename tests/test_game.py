@@ -15,12 +15,13 @@ class GameTest(unittest.TestCase):
             Card(rank="Jack", suit="Clubs"),
             Card(rank="10", suit="Clubs"),
         ]
-
-        self.community_cards = [
+        self.flop_cards = [
             Card(rank="2", suit="Diamonds"),
             Card(rank="4", suit="Hearts"),
             Card(rank="10", suit="Spades"),
         ]
+        self.turn_card = [Card(rank="Ace", suit="Clubs")]
+        self.river_card = [Card(rank="10", suit="Hearts")]
 
     def test_stores_deck_and_players(self):
         deck = MagicMock()
@@ -47,7 +48,9 @@ class GameTest(unittest.TestCase):
         mock_deck.remove_cards.side_effect = [
             self.first_two_cards,
             self.second_two_cards,
-            self.community_cards,
+            self.flop_cards,
+            self.turn_card,
+            self.river_card,
         ]
 
         mock_player1 = MagicMock()
@@ -81,7 +84,7 @@ class GameTest(unittest.TestCase):
 
         self.assertEqual(game.players, [mock_player2])
 
-    def test_deals_the_same_three_community_cards_to_all_players_in_the_flop(self):
+    def test_deals_each_player_3_flop_1_turn_and_1_river_card(self):
         mock_player1 = MagicMock()
         mock_player1.wants_to_fold.return_value = False
         mock_player2 = MagicMock()
@@ -92,15 +95,19 @@ class GameTest(unittest.TestCase):
         mock_deck.remove_cards.side_effect = [
             self.first_two_cards,
             self.second_two_cards,
-            self.community_cards,
+            self.flop_cards,
+            self.turn_card,
+            self.river_card,
         ]
 
         game = Game(deck=mock_deck, players=players)
         game.play()
         # Test that we made a call to the Deck with the remove_cards method
         # with an argument of 3
-        mock_deck.remove_cards.assert_has_calls([call(3)])
+        mock_deck.remove_cards.assert_has_calls([call(3), call(1), call(1)])
         # Test that we've called the 'add_cards' method on each player
-        # with the same three cards that we're getting from the Deck
-        mock_player1.add_cards.assert_called_with(self.community_cards)
-        mock_player2.add_cards.assert_called_with(self.community_cards)
+        # with all three community calls
+        calls = [call(self.flop_cards), call(self.turn_card), call(self.river_card)]
+
+        for player in players:
+            player.add_cards.assert_has_calls(calls)

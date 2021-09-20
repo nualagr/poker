@@ -8,3 +8,8 @@ class Player:
 
     def add_cards(self, cards):
         self.hand.add_cards(cards)
+
+    def wants_to_fold(self):
+        # Logic to build out later:
+        # if self.wager_amount < self.amount_they_have_left:
+        return False

@@ -53,3 +53,18 @@ class GameTest(unittest.TestCase):
 
         mock_player1.add_cards.assert_called_with(first_two_cards),
         mock_player2.add_cards.assert_called_with(second_two_cards)
+
+    def test_removes_player_if_not_willing_to_make_bet(self):
+        mock_deck = MagicMock()
+        mock_player1 = MagicMock()
+        mock_player2 = MagicMock()
+
+        mock_player1.wants_to_fold.return_value = True
+        mock_player2.wants_to_fold.return_value = False
+
+        players = [mock_player1, mock_player2]
+
+        game = Game(deck=mock_deck, players=players)
+        game.play()
+
+        self.assertEqual(game.players, [mock_player2])

@@ -6,15 +6,27 @@ from poker.deck import Deck
 
 
 class DeckTest(unittest.TestCase):
+    def test_has_length_that_is_equal_to_count_of_cards(self):
+        cards = [
+            Card(rank="Queen", suit="Spades"),
+            Card(rank="4", suit="Clubs"),
+            Card(rank="2", suit="Clubs"),
+        ]
+
+        deck = Deck()
+        deck.add_cards(cards)
+
+        self.assertEqual(len(deck), 3)
+
     def test_stores_no_cards_at_start(self):
         deck = Deck()
-        self.assertEqual(deck._cards, [])
+        self.assertEqual(deck.cards, [])
 
     def test_adds_cards_to_its_collection(self):
         card = Card("Ace", "Spades")
         deck = Deck()
         deck.add_cards([card])
-        self.assertEqual(deck._cards, [card])
+        self.assertEqual(deck.cards, [card])
 
     @patch("random.shuffle")
     # Need to feed in a second argument to the test
@@ -48,4 +60,4 @@ class DeckTest(unittest.TestCase):
         self.assertEqual(deck.remove_cards(1), [three])
 
         # Test the state of the object
-        self.assertEqual(deck._cards, [king, five])
+        self.assertEqual(deck.cards, [king, five])

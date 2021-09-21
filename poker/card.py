@@ -61,6 +61,13 @@ class Card:
 
     def __lt__(self, other):
         """
-        Defines the less-than operator with respect to Card Objects
+        Defines the less-than operator with respect to Card Objects.
+        Cards are compared by rank.
+        Cards of equal rank are evaluated with respect to their suit,
+        in ascending alphabetical order.
         """
+        if self.rank == other.rank:
+            # Compare their suit
+            return self.suit < other.suit
+
         return self.rank_index < other.rank_index

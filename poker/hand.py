@@ -1,4 +1,4 @@
-from poker.validators import HighCardValidator, NoCardsValidator
+from poker.validators import PairValidator, HighCardValidator, NoCardsValidator
 
 
 class Hand:
@@ -31,7 +31,7 @@ class Hand:
             ("Straight", self._straight),
             ("Three of a Kind", self._three_of_a_kind),
             ("Two Pair", self._two_pair),
-            ("Pair", self._pair),
+            ("Pair", PairValidator(cards=self.cards).is_valid),
             # Instantiate a HighCardValidator Object.
             # Provide a reference to the method on the Validator Class
             # that can then be invoked, by best_rank, to return a Boolean
@@ -63,7 +63,7 @@ class Hand:
         return len(ranks_with_four_of_a_kind) == 1
 
     def _full_house(self):
-        if self._three_of_a_kind() and self._pair():
+        if self._three_of_a_kind() and PairValidator(cards=self.cards).is_valid():
             return True
 
     def _flush(self):
@@ -100,10 +100,6 @@ class Hand:
     def _two_pair(self):
         ranks_with_pairs = self._ranks_with_count(2)
         return len(ranks_with_pairs) == 2
-
-    def _pair(self):
-        ranks_with_pairs = self._ranks_with_count(2)
-        return len(ranks_with_pairs) == 1
 
     def _ranks_with_count(self, count):
         return {

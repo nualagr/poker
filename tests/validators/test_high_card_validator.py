@@ -1,5 +1,4 @@
 import unittest
-from unittest.runner import TextTestRunner
 
 from poker.card import Card
 from poker.validators import HighCardValidator

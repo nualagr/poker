@@ -1,7 +1,7 @@
-from poker.validators import CountRankValidator
+from poker.validators import RankCountValidator
 
 
-class TwoPairValidator(CountRankValidator):
+class TwoPairValidator(RankCountValidator):
     def __init__(self, cards):
         self.cards = cards
         self.name = "Two Pair"

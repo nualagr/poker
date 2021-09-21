@@ -1,4 +1,4 @@
-class CountRankValidator:
+class RankCountValidator:
     def _ranks_with_count(self, count):
         return {
             rank: rank_count

@@ -1,4 +1,5 @@
 from poker.validators import (
+    StraightValidator,
     ThreeOfAKindValidator,
     TwoPairValidator,
     PairValidator,
@@ -34,7 +35,7 @@ class Hand:
             ("Four of a Kind", self._four_of_a_kind),
             ("Full House", self._full_house),
             ("Flush", self._flush),
-            ("Straight", self._straight),
+            ("Straight", StraightValidator(cards=self.cards).is_valid),
             ("Three of a Kind", ThreeOfAKindValidator(cards=self.cards).is_valid),
             ("Two Pair", TwoPairValidator(cards=self.cards).is_valid),
             ("Pair", PairValidator(cards=self.cards).is_valid),
@@ -62,7 +63,7 @@ class Hand:
         return is_straight_flush and is_royal
 
     def _straight_flush(self):
-        return self._flush() and self._straight()
+        return self._flush() and StraightValidator(cards=self.cards).is_valid()
 
     def _four_of_a_kind(self):
         ranks_with_four_of_a_kind = self._ranks_with_count(4)
@@ -82,24 +83,6 @@ class Hand:
             if suit_count >= 5
         }
         if len(suits_that_occur_five_or_more_times) == 1:
-            return True
-
-    def _straight(self):
-        """
-        Check that the current hand has at least 5 cards.
-        Convert cards list into a list of the cards' rank_index.
-        Use range() to generate a strictly-increasing list
-        from the first card.rank_index to the last, increment
-        the latter by one. Compare the two lists.
-        Return True if the two lists are equal.
-        """
-        if len(self.cards) < 5:
-            return False
-        rank_indexes = [card.rank_index for card in self.cards]
-        starting_rank_index = rank_indexes[0]
-        last_rank_index = rank_indexes[-1] + 1
-        straight_consecutive_indexes = list(range(starting_rank_index, last_rank_index))
-        if rank_indexes == straight_consecutive_indexes:
             return True
 
     def _ranks_with_count(self, count):

@@ -1,4 +1,5 @@
 from poker.validators import (
+    FlushValidator,
     StraightValidator,
     ThreeOfAKindValidator,
     TwoPairValidator,
@@ -34,14 +35,15 @@ class Hand:
             ("Four of a Kind", self._four_of_a_kind),
             ("Four of a Kind", self._four_of_a_kind),
             ("Full House", self._full_house),
-            ("Flush", self._flush),
+            # Instantiate each Validator Object.
+            # Provide a reference to the 'is_valid' method on each
+            # that can then be invoked, by the Hand 'best_rank' method
+            # to return a Boolean
+            ("Flush", FlushValidator(cards=self.cards).is_valid),
             ("Straight", StraightValidator(cards=self.cards).is_valid),
             ("Three of a Kind", ThreeOfAKindValidator(cards=self.cards).is_valid),
             ("Two Pair", TwoPairValidator(cards=self.cards).is_valid),
             ("Pair", PairValidator(cards=self.cards).is_valid),
-            # Instantiate a HighCardValidator Object.
-            # Provide a reference to the method on the Validator Class
-            # that can then be invoked, by best_rank, to return a Boolean
             ("High Card", HighCardValidator(cards=self.cards).is_valid),
             ("No Cards", NoCardsValidator(cards=self.cards).is_valid),
         )
@@ -63,7 +65,10 @@ class Hand:
         return is_straight_flush and is_royal
 
     def _straight_flush(self):
-        return self._flush() and StraightValidator(cards=self.cards).is_valid()
+        return (
+            FlushValidator(cards=self.cards).is_valid()
+            and StraightValidator(cards=self.cards).is_valid()
+        )
 
     def _four_of_a_kind(self):
         ranks_with_four_of_a_kind = self._ranks_with_count(4)
@@ -76,32 +81,12 @@ class Hand:
         ):
             return True
 
-    def _flush(self):
-        suits_that_occur_five_or_more_times = {
-            suit: suit_count
-            for suit, suit_count in self._card_suit_counts.items()
-            if suit_count >= 5
-        }
-        if len(suits_that_occur_five_or_more_times) == 1:
-            return True
-
     def _ranks_with_count(self, count):
         return {
             rank: rank_count
             for rank, rank_count in self._card_rank_counts.items()
             if rank_count == count
         }
-
-    @property
-    def _card_suit_counts(self):
-        card_suit_counts = {}
-        for card in self.cards:
-            # If the card suit exists in the dict, nothing will change
-            # if the card suit does not exist in the dict, it will be
-            # added with a count of zero
-            card_suit_counts.setdefault(card.suit, 0)
-            card_suit_counts[card.suit] += 1
-        return card_suit_counts
 
     @property
     def _card_rank_counts(self):

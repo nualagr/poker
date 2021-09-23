@@ -1,5 +1,6 @@
 from .rank_count_validator import RankCountValidator
 
+from .flush_validator import FlushValidator
 from .straight_validator import StraightValidator
 from .three_of_a_kind_validator import ThreeOfAKindValidator
 from .two_pair_validator import TwoPairValidator

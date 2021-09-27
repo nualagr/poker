@@ -43,4 +43,4 @@ class HandTest(unittest.TestCase):
         hand = HandWithOneValidator()
         hand.add_cards(cards=cards)
 
-        self.assertEqual(hand.best_rank(), "Pair")
+        self.assertEqual(hand.best_rank(), (0, "Pair", [ace_of_hearts, ace_of_spades]))

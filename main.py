@@ -22,12 +22,23 @@ deck.add_cards(cards)
 
 hand1 = Hand()
 hand2 = Hand()
+hand3 = Hand()
 
 player1 = Player(name="Ben", hand=hand1)
 player2 = Player(name="Bobby", hand=hand2)
-players = [player1, player2]
+player3 = Player(name="Benita", hand=hand3)
+players = [player1, player2, player3]
 
 game = Game(deck=deck, players=players)
 game.play()
-# In the Python3 Interpreter:
-# from main import deck, cards, game, hand1, hand2, player1, player2
+
+for player in players:
+    print(f"{player.name} receives a {player.hand}.")
+    # Unpack the tuple into local variables
+    index, hand_name, hand_cards = player.best_hand()
+    hand_card_strings = [str(card) for card in hand_cards]
+    hand_card_string = " and ".join(hand_card_strings)
+    print(f"{player.name} has a {hand_name} with a {hand_card_string}.")
+
+winning_player = max(players)
+print(f"The winning player is {winning_player.name}.")

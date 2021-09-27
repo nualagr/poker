@@ -23,17 +23,3 @@ class HandTest(unittest.TestCase):
         hand.add_cards(cards)
 
         self.assertEqual(hand.cards, [six_of_clubs, ace_of_spades])
-
-    def test_figures_out_royal_flush_is_best_rank(self):
-        cards = [
-            Card(rank="10", suit="Hearts"),
-            Card(rank="Jack", suit="Hearts"),
-            Card(rank="Queen", suit="Hearts"),
-            Card(rank="King", suit="Hearts"),
-            Card(rank="Ace", suit="Hearts"),
-        ]
-
-        hand = Hand()
-        hand.add_cards(cards)
-
-        self.assertEqual(hand.best_rank(), "Royal Flush")
